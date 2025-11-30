@@ -60,7 +60,40 @@ Foi definido que a arquitetura de armazenamento para esses dados será o Data La
     - Ao final de tudo, é salvo em um novo arquivo: "pokemon_finalizado.csv".
 
 
+#### Análise Exploratória:
+
+Para nos ajudar a entender os nossos dados, realizamos a análise exploratória deles considerando como variável-alvo a coluna *experience_growth*, e os gráficos gerados acabou nos mostrando algumas coisas interessantes:
+
+  - A primeira análise que fizemos, foi para buscar em qual grupo de crescimento (*experience_growth*) a maioria dos pokémon se encontram:
+
+    <img width="854" height="551" alt="image" src="https://github.com/user-attachments/assets/3fb4989b-bd2c-4ed6-b565-4f1fd541b2de" />
+
+    Com isso observamos que a maioria dos pokémon estão concentrados na metade, o que representa os grupos *medium-slow* e *medium-fast*. Isso é esperado, já que existem muitos pokémon "medianos" em força. Mesmo assim, pode-se observar uma discrepância entre os grupos *medium-slow* e *medium-fast*, em que o segundo tem quase o dobro de ocorrências do que o primeiro.
+
+  - Em seguida, começamos a cruzar variáveis para encontrar relações que nos ajudem a responder nossa pergunta. Nossa primeira hipótese é que *base_total* influencia *experience_growth*:
+
+    <img width="849" height="552" alt="image" src="https://github.com/user-attachments/assets/d3d60e6e-aea4-410e-9cec-82e154312d79" />
+
+    O boxplot acima revela claramente uma constância, quanto maior o status, maior é o grupo de expêriencia. A única categoria a apresentar outliers é *slow* (1250000) e isso provavelmente se deve ao fato de haverem pré-evoluções do pokémon muito fortes mas que não são tão fortes antes de evoluir. Isso é perceptível pela presença de pokémon com status base baixos em todas as categorias. Outras anomalias são as categorias *erratic* (600000) e *fluctuating* (1640000) que apesar de suas posições nos gráficos, na verdade são as categorias mais lenta de level up e mais rápida, respecivamente. O motivo delas terem quantidades de xp totais não condizentes é por que elas compensam sua velocidade/lentidão nos últimos níveis (level 90 - 100), onde elas se tornam o oposto da velocidade que elas tinham anteriormente. Além disso, esses dois grupos apresentam poucos membros, o que dificulta a realização de uma análise objetiva.
+
+  - Para entender melhor se existem outras variáveis que afetam *experience_growth*, decidimos utilizar um heatmap com todas as variáveis numéricas presentes no modelo:
+
+    <img width="1034" height="957" alt="image" src="https://github.com/user-attachments/assets/b3001c1e-a145-47bb-b093-35504c1258c2" />
+
+    Com esse heatmap, podemos observar que ele mostra o oposto do que foi visto anteriormente, aqui está mostrando que *base_total* tem uma correlação fraca com *capture_rate*, enquanto o antes mostrava o contrário. Outro ponto a se observar, é que o *base_total* também não tem correlação com o *capture_rate*, indo contra o que estávamos pensando. Agora, se tratando de correlações fortes, o gráfico nos mostra que existe uma entre *generation* e *pokedex_number*, o que não é nem um pouco surpreendente já que a cada geração os números incrementam de onde pararam na geração anterior. Outras correlações esperadas são *sp_attack*, *attack*, *sp_defense*, *hp*, *defense* e *speed* contribuindo para *base_total*, embora seja interessante ver os pesos, significando que há mais pokémon com ataque especial alto do que velocidade. Além disso *is_legendary* tem uma correlação relativamente alta com *base_total*, o que também faz sentido e é até meio estranho que não seja maior. Além desse gráfico, nós experimentamos computar pokémon de cada geração individualmente mas os gráficos ficaram praticamente idênticos, variando muito pouco entre os números, mas mostrando que há sim algum tipo de balanceamento ou padronização intencional entre cada adição de criaturas.
+
+  - Resolvemos também fazer uma relação entre a taxa de captura e o status total, separado em grupos pelo grupo de crescimento:
+
+    <img width="1009" height="630" alt="image" src="https://github.com/user-attachments/assets/c1ab1cb3-3ec3-46cf-891c-17e2c8339ea7" />
+
+    Esse gráfico de dispersão mostra que existem pokémon com status base altos que são que são bem fáceis de capturar, e isso faz sentido, pensando que alguns deles são eventos scriptados pelo próprio jogo. Outras informações que podemos extraír pelas cores são que: os grupos de experiência mais lentos tendem a se concentrar dentre os mais difíceis de capturar e os grupos erratic e fluctuating se fazem presentes em quase todos os quadrantes. Além disso, pode-se observar a relação óbvia de que pokémon mais fortes são em geral mais difíceis de capturar. O gráfico aparenta ter uma quantidade elevada de outliers, mas isso pode ser explicado através de decisões de design que não necessáriamente tem a ver com os atributos sendo analizados, mas sim outras características únicas que não se podem ser quantificadas da forma que fizemos com os atributos. O importante é que a tendência é tangível.
 
 
-
-
+Com base em todas essas análise, podemos concluir que:
+   - A maioria dos pokémon se encontra nos grupos de crescimento intermediários (*medium-fast* e *medium-slow*);
+   - Quanto maior o *base_total* do pokémon, maior é a quantidade de *experience_growth* necessária para atingir o nível máximo;
+   - *experience_growth* não parece ser tão afetado por algum atributo individualmente, mas está na meio de outras relações entre multiplos atributos, mostrando que sua tendência é uma das duas: complicada ou inexistente.
+   - As variáveis mais promissoras para incluir em um modelo preditivo para 'experience_growth' são:
+       - *base_total* - Devido à sua forte correlação mostrada no boxplot além de ter uma forte correlação com outras variáveis, como a *is_legendary* por exemplo;
+       - *capture_rate* - Porque suas relações com as demais variaveis revelam mais sobre as tendências do *experience_growth*, além da relação entre as duas;
+       - *is_legendary* - Apresente uma correlação forte com *experience_growth*, pelo menos de acordo com o heatmap.
