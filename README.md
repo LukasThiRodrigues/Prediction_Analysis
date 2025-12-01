@@ -103,14 +103,20 @@ Com base em todas essas análise, podemos concluir que:
 Para treinar o nosso modelo de classificação, decidimos utilizar os algoritmos catboost, lightgbm e xgboost. Decidimos escolher eles pois foram os únicos que mostraram algum resultado significativo.
 
 Mas além do treino, escolhemos também 3 métricas de desempenho, para avaliar os algoritmos:
-  - Precisão:
-  - Recall:
-  - F1-Score:
+  - Precisão: Quando um modelo prevê algo, ela mede quantas dessas previsões estão corretas. Se encaixa no nosso caso pois mostra se o modelo realmente sabe identificar todos os *experience_growth*, e não só o dominante.
+  - Recall: Ele responde a pergunta: "De todos os Pokémon que realmente pertencem à classe X, quantos o modelo identificou corretamente?". Ou seja, quanto maior o recall alto, poucas ocorrências que o modelo deixou passar.
+  - F1-Score: É basicamente um equilibrio entre ambas as métricas anteriores. Se a Precisão for boa mas o Recall for ruim, o F1 fica baixo, e vice-versa. Ele se encaixa no nosso caso pois ele avalia cada grupo individualmente, não deixa a classe majoritária dominar e reflete se o modelo está equilibrado.
 
 Comparando essas métricas, tivemos o seguinte resultado:
 
+| Modelo       | Accuracy   | Precision   | Recall     | F1-Score   |
+| ------------ | ---------- | ----------- | ---------- | ---------- |
+| **CatBoost** | 0.6481     | 0.3449      | 0.5357     | 0.3488     |
+| **XGBoost**  | **0.6728** | 0.3514      | **0.5427** | **0.3612** |
+| **LightGBM** | 0.6667     | **0.3552**  | 0.5410     | 0.3596     |
 
-Podemos observar que...
+Após comparar as 3 métricas, podemos observar que o XGBoost apresentou o melhor desempenho geral. Ele obteve a maior acurácia (67,28%), o maior recall (0,5427) e o maior F1-Score (0,3612), sendo a métrica mais apropriada para problemas multiclasse desbalanceados. O LightGBM apresentou ligeira vantagem em precisão, mas não foi suficiente para superar o XGBoost nas outras métricas.
+Considerando o objetivo do negócio, que é prever corretamente diferentes tipos de experience_growth com base no *base_total*, *capture_rate* e *is_legendary*, o XGBoost se mostra o modelo mais equilibrado e com melhor performance.
 
 ### Deploy
 
