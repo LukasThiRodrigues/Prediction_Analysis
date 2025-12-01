@@ -130,6 +130,8 @@ Primeiramente fizemos um notebook, que basicamente só pega os dataset novo da p
 
 Os resultados retornados então devem se parecer com isso:
 
+<img width="393" height="316" alt="image" src="https://github.com/user-attachments/assets/7b8e92b3-4850-40a2-a81d-5bbb96935fb4" />
+
 <img width="608" height="215" alt="image" src="https://github.com/user-attachments/assets/b1bd7341-76fb-45ab-8f46-2106011bcb55" />
 
 Note que esses cinco receberam a mesma classificação de "Medium Fast", isso não apenas porque são similares, mas também por que é o grupo mais comum no dataset base o que acabou viciando o modelo. Na verdade, pelos nossos testes, é bem difícil ele dar alguma classificação além de 'Medium Fast', e a conclusão que podemos chegar é simplesmente que não há um padrão bem definido pra isso. A gamefreak escolhe essas coisas sem método, nível caso a caso, e muitas vezes levam em conta informações circunstânciais e não quantitativa, portanto infelizmente nossa proposta inicial acabou em derrota.
