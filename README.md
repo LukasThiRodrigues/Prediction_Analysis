@@ -97,3 +97,20 @@ Com base em todas essas análise, podemos concluir que:
        - *base_total* - Devido à sua forte correlação mostrada no boxplot além de ter uma forte correlação com outras variáveis, como a *is_legendary* por exemplo;
        - *capture_rate* - Porque suas relações com as demais variaveis revelam mais sobre as tendências do *experience_growth*, além da relação entre as duas;
        - *is_legendary* - Apresente uma correlação forte com *experience_growth*, pelo menos de acordo com o heatmap.
+
+### Treinamento
+
+Para treinar o nosso modelo de classificação, decidimos utilizar os algoritmos catboost, lightgbm e xgboost. Decidimos escolher eles pois foram os únicos que mostraram algum resultado significativo.
+
+Mas além do treino, escolhemos também 3 métricas de desempenho, para avaliar os algoritmos:
+  - Precisão:
+  - Recall:
+  - F1-Score:
+
+Comparando essas métricas, tivemos o seguinte resultado:
+
+
+Podemos observar que...
+
+### Deploy
+
