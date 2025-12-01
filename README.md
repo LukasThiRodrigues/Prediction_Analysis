@@ -120,3 +120,16 @@ Considerando o objetivo do negócio, que é prever corretamente diferentes tipos
 
 ### Deploy
 
+A escolha do melhor modelo é realizada automáticamente pelo script de treinamento e teste, e ele é salvo no storage da Azure utilizando as libs do Pickle e Azure:
+
+<img width="457" height="339" alt="image" src="https://github.com/user-attachments/assets/c43a24ec-5ca6-476d-83e9-20675aa7084c" />
+
+Em seguida, elaboramos um dataset de Pokémon falsos para comparar (os dados foram pegos do projeto feito por fãs Pokémon Uranium) que utilizariamos para o Deploy, este que foi realizado em duas capacidades.
+
+Primeiramente fizemos um notebook, que basicamente só pega os dataset novo da pasta local, o modelo do Azure e realiza a predição. Depois decidimos realizar o deploy com uma função do Azure, que acabou também sendo feita localmente para não gastar dinheiro, mas toda a estrutura pode ser transferida para o Azure e ter sua API consumida da mesma forma.
+
+Os resultados retornados então devem se parecer com isso:
+
+<img width="608" height="215" alt="image" src="https://github.com/user-attachments/assets/b1bd7341-76fb-45ab-8f46-2106011bcb55" />
+
+Note que esses cinco receberam a mesma classificação de "Medium Fast", isso não apenas porque são similares, mas também por que é o grupo mais comum no dataset base o que acabou viciando o modelo. Na verdade, pelos nossos testes, é bem difícil ele dar alguma classificação além de 'Medium Fast', e a conclusão que podemos chegar é simplesmente que não há um padrão bem definido pra isso. A gamefreak escolhe essas coisas sem método, nível caso a caso, e muitas vezes levam em conta informações circunstânciais e não quantitativa, portanto infelizmente nossa proposta inicial acabou em derrota.
